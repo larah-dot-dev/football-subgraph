@@ -1,18 +1,6 @@
-# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
 type Team {
     id: ID!
     name: String!
-    shortcode: String!
-    crest: String!
-}
-
-type Tournament {    
-    id: ID!
-    name: String!
-    logo: String!
 }
 
 type Match {
@@ -23,6 +11,9 @@ type Match {
 
     """Away team"""
     away: Team!
+
+    """Yahoo match details URL"""
+    url: String!
 
     """
     When is kickoff? Timezone is UTC.

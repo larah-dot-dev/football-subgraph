@@ -9,7 +9,8 @@ import (
 
 	"football-subgraph/graph/model"
 	"github.com/apognu/gocal"
-
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 type memo[T any] struct {
@@ -45,11 +46,10 @@ func getMatches() (matches []*model.Match, err error) {
 	if err != nil {
 		return nil, err
 	}
-
 	defer f.Close()
 
-	start, end := time.Now(), time.Now().Add(10*24*time.Hour)
 	c := gocal.NewParser(f)
+	start, end := time.Now(), time.Now().Add(10*24*time.Hour)
 	c.Start, c.End = &start, &end
 	c.Parse()
 
@@ -59,23 +59,24 @@ func getMatches() (matches []*model.Match, err error) {
 		split := strings.Split(event.Summary, " at ")
 		home, away := split[0], split[1]
 
+		split = strings.Split(event.URL, "/")
+		tournament := cases.Title(language.English).String(
+			strings.ReplaceAll(split[4], "-", " "),
+		)
+
 		data[i] = &model.Match{
 			ID: fmt.Sprintf("fixture%d", i),
+			RawTime:	*event.Start,
 			Home: &model.Team{
-				ID:        "",
+				ID:        strings.ReplaceAll(strings.ToLower(home), " ", "-"),
 				Name:      home,
-				Shortcode: "",
-				Crest:     "",
 			},
 			Away: &model.Team{
-				ID:        "",
+				ID:        strings.ReplaceAll(strings.ToLower(away), " ", "-"),
 				Name:      away,
-				Shortcode: "",
-				Crest:     "",
 			},
 			Kickoff:    event.Start.Format(time.RFC3339),
-			Tournament: "tournament",
-			RawTime:	*event.Start,
+			Tournament: tournament,
 		}
 	}
 

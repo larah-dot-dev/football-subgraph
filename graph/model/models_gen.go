@@ -12,6 +12,8 @@ type Match struct {
 	Home *Team `json:"home"`
 	// Away team
 	Away *Team `json:"away"`
+	// Yahoo match details URL
+	URL string `json:"url"`
 	// When is kickoff? Timezone is UTC.
 	// Encoded as RFC3339 (e.g. "2006-01-02T15:04:05Z07:00")
 	Kickoff string `json:"kickoff"`
@@ -25,14 +27,6 @@ type Query struct {
 }
 
 type Team struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	Shortcode string `json:"shortcode"`
-	Crest     string `json:"crest"`
-}
-
-type Tournament struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
-	Logo string `json:"logo"`
 }
