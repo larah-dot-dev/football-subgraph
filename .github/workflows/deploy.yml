@@ -25,5 +25,5 @@ jobs:
           caprover deploy \
             --caproverUrl "${{ secrets.CAPROVER_SERVER }}" \
             --appToken "${{ secrets.APP_TOKEN }}" \
-            --caproverApp "${{ secrets.CAPROVER_APP_NAME }}" \
+            --caproverApp "${{ secrets.APP_NAME }}" \
             --branch main
