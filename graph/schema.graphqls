@@ -12,7 +12,7 @@ type Match {
     """Away team"""
     away: Team!
 
-    """Yahoo match details URL"""
+    """Details URL"""
     url: String!
 
     """

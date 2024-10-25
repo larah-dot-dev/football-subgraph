@@ -21,10 +21,9 @@ func background_fetch_match_data() {
 }
 
 func init() {
-    zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 }
-
 
 func main() {
 	go background_fetch_match_data()

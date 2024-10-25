@@ -9,8 +9,6 @@ import (
 
 	"football-subgraph/graph/model"
 	"github.com/apognu/gocal"
-	"github.com/rs/zerolog/log"
-
 )
 
 type memo[T any] struct {
@@ -60,6 +58,8 @@ func getMatches() (matches []*model.Match, err error) {
 		teams, tournament := split[0], split[1]
 		home, away := strings.Split(teams, " vs ")[0], strings.Split(teams, " vs ")[1]
 
+		url := fmt.Sprintf("https://www.manutd.com/en/matches/matchcenter?matchId=%s", event.Uid)
+
 		data[i] = &model.Match{
 			ID: fmt.Sprintf("fixture%d", i),
 			RawTime:	*event.Start,
@@ -73,6 +73,7 @@ func getMatches() (matches []*model.Match, err error) {
 			},
 			Kickoff:    event.Start.Format(time.RFC3339),
 			Tournament: tournament,
+			URL: 	  	url,
 		}
 	}
 
