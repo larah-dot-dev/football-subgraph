@@ -4,14 +4,14 @@ import (
 	"net/http"
 	"os"
 	"io"
-	"fmt"
+	"github.com/rs/zerolog/log"
 )
 
 
 func DownloadIcsFile() (ics_file string, err error) {
-	fmt.Println("Fetching data from sports.yahoo.com...")
+	log.Print("Fetching data from manutd.com...")
 
-	resp, err := http.Get("https://sports.yahoo.com/soccer/teams/man-utd/ical.ics")
+	resp, err := http.Get("https://www.manutd.com/en/Manchester_United.ics")
 	if err != nil {
         return "", err
     }

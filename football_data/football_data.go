@@ -9,8 +9,8 @@ import (
 
 	"football-subgraph/graph/model"
 	"github.com/apognu/gocal"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
+	"github.com/rs/zerolog/log"
+
 )
 
 type memo[T any] struct {
@@ -56,13 +56,9 @@ func getMatches() (matches []*model.Match, err error) {
 	data := make([]*model.Match, len(c.Events))
 
 	for i, event := range c.Events {
-		split := strings.Split(event.Summary, " at ")
-		home, away := split[0], split[1]
-
-		split = strings.Split(event.URL, "/")
-		tournament := cases.Title(language.English).String(
-			strings.ReplaceAll(split[4], "-", " "),
-		)
+		split := strings.Split(event.Summary, " - ")
+		teams, tournament := split[0], split[1]
+		home, away := strings.Split(teams, " vs ")[0], strings.Split(teams, " vs ")[1]
 
 		data[i] = &model.Match{
 			ID: fmt.Sprintf("fixture%d", i),

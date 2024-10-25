@@ -2,14 +2,14 @@ package main
 
 import (
 	"football-subgraph/graph"
-	"log"
 	"os"
 
 	"football-subgraph/football_data"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/gin-gonic/gin"
-
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"time"
 )
 
@@ -19,6 +19,12 @@ func background_fetch_match_data() {
 		time.Sleep(time.Hour)
 	}
 }
+
+func init() {
+    zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+}
+
 
 func main() {
 	go background_fetch_match_data()
